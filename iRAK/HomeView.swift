@@ -29,26 +29,30 @@ struct Home: View {
   
   var body: some View {
     ZStack {
-      getColor(image: selectedTab)
+      Color("BackgroundColor")
         .ignoresSafeArea()
       VStack {
         TabView(selection: $selectedTab) {
           ZStack {
-            Color.green
+            Color("BackgroundColor")
               .ignoresSafeArea(.all, edges: .all)
             VStack {
-              Text("Hi")
+                Image(systemName: "globe")
+                    .imageScale(.large)
+                    .foregroundColor(.accentColor)
+                Text("Hello, world!")
             }
-            .tag("house")
+            .padding()
           }
-          
-          Color.blue
+          .tag("house")
+
+          ContentView()
             .ignoresSafeArea(.all, edges: .all)
             .tag("archivebox")
           Color.red
             .ignoresSafeArea(.all, edges: .all)
             .tag("bell")
-          Color.yellow
+          Color("BackgroundColor")
             .ignoresSafeArea(.all, edges: .all)
             .tag("message")
           Color.orange
@@ -72,7 +76,7 @@ struct Home: View {
                   .frame(width: 25, height: 25)
                   .foregroundColor(selectedTab == image ? getColor(image: image) : Color.gray)
                   .padding(selectedTab == image ? 15 : 0)
-                  .background(Color.white.opacity(selectedTab == image ? 1 : 0).clipShape(Circle())).offset(x: selectedTab == image ? -14 : 0)
+                  .background(Color("ForegroundColor").opacity(selectedTab == image ? 1 : 0).clipShape(Circle()).shadow(radius: 3)).offset(x: selectedTab == image ? -14 : 0)
                   .matchedGeometryEffect(id: image, in: animation)
                   .offset(x: reader.frame(in: .global).minX - reader.frame(in: .global).midX + 14, y: selectedTab == image ? -50 : 0)
               })
@@ -88,7 +92,7 @@ struct Home: View {
         }
         .padding(.horizontal, 30)
         .padding(.vertical)
-        .background(Color.white.clipShape(CustomShape(xAxis: xAxis)).cornerRadius(12))
+        .background(Color("ForegroundColor").clipShape(CustomShape(xAxis: xAxis)).cornerRadius(12).shadow(radius: 3))
         .padding(.horizontal)
         .padding(.bottom,UIApplication.shared.windows.first?.safeAreaInsets.bottom)
       }
