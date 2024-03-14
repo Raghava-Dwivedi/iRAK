@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F54FDEA2BA355390063B0C4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54FDE92BA355390063B0C4 /* HomeView.swift */; };
 		E55F6CBA2B9A1F5500E472B8 /* iRAKApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F6CB92B9A1F5500E472B8 /* iRAKApp.swift */; };
 		E55F6CBC2B9A1F5500E472B8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F6CBB2B9A1F5500E472B8 /* ContentView.swift */; };
 		E55F6CBE2B9A1F5700E472B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E55F6CBD2B9A1F5700E472B8 /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F54FDE92BA355390063B0C4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		E55F6CB62B9A1F5500E472B8 /* iRAK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iRAK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55F6CB92B9A1F5500E472B8 /* iRAKApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iRAKApp.swift; sourceTree = "<group>"; };
 		E55F6CBB2B9A1F5500E472B8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			children = (
 				E55F6CB92B9A1F5500E472B8 /* iRAKApp.swift */,
 				E55F6CBB2B9A1F5500E472B8 /* ContentView.swift */,
+				1F54FDE92BA355390063B0C4 /* HomeView.swift */,
 				E55F6CBD2B9A1F5700E472B8 /* Assets.xcassets */,
 				E55F6CBF2B9A1F5700E472B8 /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F54FDEA2BA355390063B0C4 /* HomeView.swift in Sources */,
 				E55F6CBC2B9A1F5500E472B8 /* ContentView.swift in Sources */,
 				E55F6CBA2B9A1F5500E472B8 /* iRAKApp.swift in Sources */,
 			);
