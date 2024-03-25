@@ -9,120 +9,177 @@
 
 import SwiftUI
 
+var tabs = ["house", "archivebox", "bell", "message", "mic"]
+
 struct HomeView: View {
+  @State private var isSettingsPresented = false
+  @State private var isProfilePresented = false
+  @State var selectedTab = "house"
+
   var body: some View {
-    VStack {
-      Home()
+    
+    NavigationView {
+      ZStack {
+        Color("BackgroundColor")
+          .ignoresSafeArea()
+        VStack {
+          // Buttons on top
+          HStack {
+            Button(action: {
+              self.isSettingsPresented.toggle()
+            }) {
+              ZStack {
+                Circle()
+                    .fill(Color.white)
+                    .shadow(radius: 3)
+                    .frame(width: 40, height: 40)
+                Image(systemName: "gearshape.fill")
+              }
+            }
+            
+            Spacer()
+            
+            Text(getTitle(sheetNum: selectedTab))
+              .dynamicTypeSize(.xxxLarge)
+              .bold()
+            
+            Spacer()
+            
+            Button(action: {
+              self.isProfilePresented.toggle()
+            }) {
+              Image(systemName: "person.circle.fill")
+            }
+          }
+          .padding(.horizontal)
+          .dynamicTypeSize(.xxxLarge)
+          
+          // Tab view at the bottom
+          TabsView(selectedTab: $selectedTab)
+        }
+        .sheet(isPresented: $isSettingsPresented) {
+          Text("This is the settings view")
+        }
+        .sheet(isPresented: $isProfilePresented) {
+          Text("This is the profile view")
+        }
+      }
+    }
+  }
+    
+  func getTitle(sheetNum: String) -> String {
+    switch sheetNum {
+    case "house":
+      return "Game 1 title"
+    case "archivebox":
+      return "Game 2 title"
+    case "bell":
+      return "Game 3 title"
+    case "message":
+      return "Game 4 title"
+    case "mic":
+      return "Game 5 title"
+    default:
+      return "title"
     }
   }
 }
 
-struct Home: View {
-  @State var selectedTab = "house"
+struct TabsView: View {
+  @Binding var selectedTab: String
   
-  init() {
+  init(selectedTab: Binding<String>) {
     UITabBar.appearance().isHidden = true
+    _selectedTab = selectedTab
   }
   
   @State var xAxis: CGFloat = 0
   @Namespace var animation
   
   var body: some View {
-    ZStack {
-      Color("BackgroundColor")
-        .ignoresSafeArea()
-      VStack {
-        TabView(selection: $selectedTab) {
-          ZStack {
-            Color("BackgroundColor")
-              .ignoresSafeArea(.all, edges: .all)
-            VStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundColor(.accentColor)
-                Text("Hello, world!")
-            }
-            .padding()
-          }
-          .tag("house")
-
-          ContentView()
-            .ignoresSafeArea(.all, edges: .all)
-            .tag("archivebox")
-          Color.red
-            .ignoresSafeArea(.all, edges: .all)
-            .tag("bell")
+    VStack {
+      TabView(selection: $selectedTab) {
+        ZStack {
           Color("BackgroundColor")
             .ignoresSafeArea(.all, edges: .all)
-            .tag("message")
-          Color.orange
-            .ignoresSafeArea(.all, edges: .all)
-            .tag("mic")
-          
-        }
-        HStack(spacing: 0) {
-          ForEach(tabs, id: \.self) {image in
-            GeometryReader { reader in
-              Button(action: {
-                withAnimation(.spring()) {
-                  selectedTab = image
-                  xAxis = reader.frame(in: .global).minX
-                }
-              }, label: {
-                Image(systemName: image)
-                  .resizable()
-                  .renderingMode(.template)
-                  .aspectRatio(contentMode: .fit)
-                  .frame(width: 25, height: 25)
-                  .foregroundColor(selectedTab == image ? getColor(image: image) : Color.gray)
-                  .padding(selectedTab == image ? 15 : 0)
-                  .background(Color("ForegroundColor").opacity(selectedTab == image ? 1 : 0).clipShape(Circle()).shadow(radius: 3)).offset(x: selectedTab == image ? -14 : 0)
-                  .matchedGeometryEffect(id: image, in: animation)
-                  .offset(x: reader.frame(in: .global).minX - reader.frame(in: .global).midX + 14, y: selectedTab == image ? -50 : 0)
-              })
-              .onAppear(perform: {
-                if image == tabs.first {
-                  xAxis = reader.frame(in: .global).minX
-                }
-              })
-            }
-            .frame(width: 25, height: 30)
-            if image != tabs.last{Spacer(minLength: 0)}
+          VStack {
+            Image(systemName: "globe")
+              .imageScale(.large)
+              .foregroundColor(.accentColor)
+            Text("Hello, world!")
           }
+          .padding()
         }
-        .padding(.horizontal, 30)
-        .padding(.vertical)
-        .background(Color("ForegroundColor").clipShape(CustomShape(xAxis: xAxis)).cornerRadius(12).shadow(radius: 3))
-        .padding(.horizontal)
-        .padding(.bottom,UIApplication.shared.windows.first?.safeAreaInsets.bottom)
+        .tag("house")
+        
+        ContentView()
+          .ignoresSafeArea(.all, edges: .all)
+          .tag("archivebox")
+        Color.red
+          .ignoresSafeArea(.all, edges: .all)
+          .tag("bell")
+        Color("BackgroundColor")
+          .ignoresSafeArea(.all, edges: .all)
+          .tag("message")
+        Color.orange
+          .ignoresSafeArea(.all, edges: .all)
+          .tag("mic")
+        
       }
-      .ignoresSafeArea(.all, edges: .bottom)
+      HStack(spacing: 0) {
+        ForEach(tabs, id: \.self) {image in
+          GeometryReader { reader in
+            Button(action: {
+              withAnimation(.spring()) {
+                selectedTab = image
+                xAxis = reader.frame(in: .global).minX
+              }
+            }, label: {
+              Image(systemName: image)
+                .resizable()
+                .renderingMode(.template)
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 25, height: 25)
+                .foregroundColor(selectedTab == image ? getColor(image: image) : Color.gray)
+                .padding(selectedTab == image ? 15 : 0)
+                .background(Color("ForegroundColor").opacity(selectedTab == image ? 1 : 0).clipShape(Circle()).shadow(radius: 3)).offset(x: selectedTab == image ? -14 : 0)
+                .matchedGeometryEffect(id: image, in: animation)
+                .offset(x: reader.frame(in: .global).minX - reader.frame(in: .global).midX + 14, y: selectedTab == image ? -50 : 0)
+            })
+            .onAppear(perform: {
+              if image == tabs.first {
+                xAxis = reader.frame(in: .global).minX
+              }
+            })
+          }
+          .frame(width: 25, height: 30)
+          if image != tabs.last{Spacer(minLength: 0)}
+        }
+      }
+      .padding(.horizontal, 30)
+      .padding(.vertical)
+      .background(Color("ForegroundColor").clipShape(CustomShape(xAxis: xAxis)).cornerRadius(12).shadow(radius: 3))
+      .padding(.horizontal)
+      .padding(.bottom,UIApplication.shared.windows.first?.safeAreaInsets.bottom)
     }
-  }
-  
-  func getColor(image: String) -> Color {
-    switch image {
-    case "house":
-      return Color.green
-    case "archivebox":
-      return Color.blue
-    case "bell":
-      return Color.red
-    case "message":
-      return Color.yellow
-    case "mic":
-      return Color.orange
-    default:
-      return Color.gray
-    }
+    .ignoresSafeArea(.all, edges: .bottom)
   }
 }
 
-var tabs = ["house", "archivebox", "bell", "message", "mic"]
-
-struct HomeView_Previews: PreviewProvider {
-  static var previews: some View {
-    HomeView()
+func getColor(image: String) -> Color {
+  switch image {
+  case "house":
+    return Color.green
+  case "archivebox":
+    return Color.blue
+  case "bell":
+    return Color.red
+  case "message":
+    return Color.yellow
+  case "mic":
+    return Color.orange
+  default:
+    return Color.gray
   }
 }
 
@@ -154,5 +211,11 @@ struct CustomShape: Shape {
       path.addCurve(to: to1, control1: control1, control2: control2)
       path.addCurve(to: to2, control1: control3, control2: control4)
     }
+  }
+}
+
+struct HomeView_Previews: PreviewProvider {
+  static var previews: some View {
+    HomeView()
   }
 }
