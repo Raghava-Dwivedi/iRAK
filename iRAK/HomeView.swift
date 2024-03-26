@@ -15,9 +15,8 @@ struct HomeView: View {
   @State private var isSettingsPresented = false
   @State private var isProfilePresented = false
   @State var selectedTab = "house"
-
+  
   var body: some View {
-    
     NavigationView {
       ZStack {
         Color("BackgroundColor")
@@ -30,9 +29,9 @@ struct HomeView: View {
             }) {
               ZStack {
                 Circle()
-                    .fill(Color.white)
-                    .shadow(radius: 3)
-                    .frame(width: 40, height: 40)
+                  .fill(Color.white)
+                  .shadow(radius: 3)
+                  .frame(width: 40, height: 40)
                 Image(systemName: "gearshape.fill")
               }
             }
@@ -48,7 +47,13 @@ struct HomeView: View {
             Button(action: {
               self.isProfilePresented.toggle()
             }) {
-              Image(systemName: "person.circle.fill")
+              ZStack {
+                Circle()
+                  .fill(Color.white)
+                  .shadow(radius: 3)
+                  .frame(width: 40, height: 40)
+                Image(systemName: "person.circle.fill")
+              }
             }
           }
           .padding(.horizontal)
@@ -66,7 +71,7 @@ struct HomeView: View {
       }
     }
   }
-    
+  
   func getTitle(sheetNum: String) -> String {
     switch sheetNum {
     case "house":
@@ -121,10 +126,17 @@ struct TabsView: View {
         Color("BackgroundColor")
           .ignoresSafeArea(.all, edges: .all)
           .tag("message")
-        Color.orange
-          .ignoresSafeArea(.all, edges: .all)
-          .tag("mic")
-        
+        ZStack {
+          Color("BackgroundColor")
+            .ignoresSafeArea(.all, edges: .all)
+          VStack {
+            NavigationLink(destination: ContentView()) {
+              Text("Go to another view")
+            }
+          }
+          .padding()
+        }
+        .tag("mic")
       }
       HStack(spacing: 0) {
         ForEach(tabs, id: \.self) {image in
@@ -177,7 +189,7 @@ func getColor(image: String) -> Color {
   case "message":
     return Color.yellow
   case "mic":
-    return Color.orange
+    return Color.purple
   default:
     return Color.gray
   }
