@@ -159,7 +159,7 @@ struct TabsView: View {
                 .offset(x: reader.frame(in: .global).minX - reader.frame(in: .global).midX + 14, y: selectedTab == image ? -50 : 0)
             })
             .onAppear(perform: {
-              if image == tabs.first {
+              if selectedTab == tabs.first {
                 xAxis = reader.frame(in: .global).minX
               }
             })
