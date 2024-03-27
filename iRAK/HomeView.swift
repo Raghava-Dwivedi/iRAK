@@ -29,7 +29,7 @@ struct HomeView: View {
             }) {
               ZStack {
                 Circle()
-                  .fill(Color.white)
+                  .fill(Color("ForegroundColor"))
                   .shadow(radius: 3)
                   .frame(width: 40, height: 40)
                 Image(systemName: "gearshape.fill")
@@ -49,7 +49,7 @@ struct HomeView: View {
             }) {
               ZStack {
                 Circle()
-                  .fill(Color.white)
+                  .fill(Color("ForegroundColor"))
                   .shadow(radius: 3)
                   .frame(width: 40, height: 40)
                 Image(systemName: "person.circle.fill")
