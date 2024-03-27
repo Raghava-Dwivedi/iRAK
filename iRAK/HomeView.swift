@@ -92,10 +92,15 @@ struct HomeView: View {
 
 struct TabsView: View {
   @Binding var selectedTab: String
+  var bottomPadding: CGFloat = 0
   
   init(selectedTab: Binding<String>) {
     UITabBar.appearance().isHidden = true
     _selectedTab = selectedTab
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+       let safeAreaInsetsBottom = windowScene.windows.first?.safeAreaInsets.bottom {
+      bottomPadding = safeAreaInsetsBottom
+    }
   }
   
   @State var xAxis: CGFloat = 0
@@ -172,7 +177,7 @@ struct TabsView: View {
       .padding(.vertical)
       .background(Color("ForegroundColor").clipShape(CustomShape(xAxis: xAxis)).cornerRadius(12).shadow(radius: 3))
       .padding(.horizontal)
-      .padding(.bottom,UIApplication.shared.windows.first?.safeAreaInsets.bottom)
+      .padding(.bottom, bottomPadding)
     }
     .ignoresSafeArea(.all, edges: .bottom)
   }
